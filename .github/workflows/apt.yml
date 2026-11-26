@@ -36,7 +36,7 @@ jobs:
       - name: Pakete und Paketquelle
         env:
           APT_SIGNING_KEY: ${{ secrets.APT_SIGNING_KEY }}
-          APT_URL: ${{ vars.APT_URL || 'https://lucya-astralis.github.io/akari-distro' }}
+          APT_URL: ${{ vars.APT_URL || 'https://apt.lucya.systems' }}
         run: |
           git config --global --add safe.directory '*'
           tools/ci-archive.sh akari public

@@ -31,7 +31,7 @@ jobs:
           restore-keys: debian-netinst-
       - name: ISO bauen
         env:
-          APT_URL: ${{ vars.APT_URL || 'https://lucya-astralis.github.io/akari-distro' }}
+          APT_URL: ${{ vars.APT_URL || 'https://apt.lucya.systems' }}
         run: iso/build-iso.sh out
       - name: Rauchtest in QEMU
         run: iso/test/smoke.sh out/akari-os-*.iso work

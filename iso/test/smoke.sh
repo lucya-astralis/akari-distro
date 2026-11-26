@@ -27,13 +27,29 @@ rm -f "$W/disk.qcow2"; qemu-img create -q -f qcow2 "$W/disk.qcow2" 20G
 
 say "Installieren (unbeaufsichtigt)"
 start=$(date +%s)
+: > "$W/install.log"
+# a question on the screen ([!!]) means the answers miss one: stop at once and show it,
+# instead of waiting for the time limit
+( while sleep 10; do
+    if grep -aq '\[!!\]' "$W/install.log"; then
+      sleep 5
+      echo "Der Installer stellt eine Frage, die der Test nicht beantwortet:"
+      tr -d '\r' < "$W/install.log" | sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g; s/\x1b[()][0-9A-B]//g' | tr -s ' ' \
+        | grep -ao '\[!!\][^<]*' | tail -1 | cut -c1-600
+      pkill -f "disk.qcow2,if=virtio -cdrom" || true
+      exit 0
+    fi
+  done ) &
+WATCH=$!
 # shellcheck disable=SC2086
-timeout 3600 qemu-system-x86_64 $ACCEL -m 3072 -smp 2 -no-reboot -display none \
+timeout 2700 qemu-system-x86_64 $ACCEL -m 3072 -smp 2 -no-reboot -display none \
   -drive file="$W/disk.qcow2",if=virtio -cdrom "$ISO" \
   -kernel "$W/vmlinuz" -initrd "$W/initrd.gz" \
-  -append "auto=true priority=critical preseed/url=http://10.0.2.2:8000/test.cfg locale=de_DE.UTF-8 keymap=de hostname=akari domain= interface=auto console=ttyS0,115200n8 --- console=ttyS0,115200n8" \
+  -append "auto=true priority=critical preseed/url=http://10.0.2.2:8000/test.cfg locale=en_US.UTF-8 keymap=de hostname=akari domain= interface=auto console=ttyS0,115200n8 --- console=ttyS0,115200n8" \
   -nic user,model=virtio-net-pci -serial file:"$W/install.log" \
-  || { echo "Die Installation ist nicht durchgelaufen (Zeit oder Fehler)."; tail -40 "$W/install.log"; exit 1; }
+  || { kill $WATCH 2>/dev/null; echo "Die Installation ist nicht durchgelaufen (Zeit oder Fehler)."; exit 1; }
+kill $WATCH 2>/dev/null || true
+grep -aq '\[!!\]' "$W/install.log" && { echo "Abgebrochen: der Installer hat gefragt (oben)."; exit 1; }
 say "installiert in $(( ($(date +%s) - start) / 60 )) Minuten"
 
 say "Von der Platte starten"

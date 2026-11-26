@@ -11,7 +11,7 @@
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"; ROOT="$(dirname "$HERE")"
 OUT="$(mkdir -p "$1" && cd "$1" && pwd)"
-APT_URL="${APT_URL:-https://lucya-astralis.github.io/akari-distro}"
+APT_URL="${APT_URL:-https://apt.lucya.systems}"
 MIRROR="${DEBIAN_CD:-https://cdimage.debian.org/debian-cd/current/amd64/iso-cd}"
 VERSION="$(sed -n 's/^VERSION_ID="\(.*\)"/\1/p' "$ROOT/packages/akari-base/files/os-release")"
 NAME="akari-os-$VERSION-amd64-netinst"
