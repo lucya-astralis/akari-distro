@@ -9,8 +9,21 @@ bringt die Pakete `akari`, `akari-shell`, `akari-desktop`):
 | `akari-base` | Systemidentität: `/usr/lib/os-release` mit `ID=akari`, `ID_LIKE=debian` (Debians Fassung per `dpkg-divert` beiseite), Begrüßung an der Konsole (agetty liest Akaris issue, `/etc/issue` bleibt Debians), dpkg-Herkunft `akari` |
 | `akari-archive-keyring` | der öffentliche Schlüssel der Paketquelle, für `Signed-By:` |
 
-Später hier: das ISO (debian-cd, Installer im Akari-Look, Vorbelegung,
-Auswahl „Akari OS“), das GRUB-Thema, die Paketquelle `apt.lucya.systems`.
+Dazu das **Installer-ISO** (`iso/`) und die **Paketquelle**
+[apt.lucya.systems](https://apt.lucya.systems) (GitHub Pages, `tools/ci-archive.sh`).
+
+## Das ISO
+
+`iso/build-iso.sh OUT` nimmt Debians offizielles Netinst (geprüft gegen
+Debians signierte Prüfsummen) und legt Akaris Vorbelegung, den
+Archiv-Schlüssel und den Booteintrag „Akari OS installieren“ dazu. Der
+Installer fragt nur Sprache, Tastatur, Netz, Rechnername, Platte und das
+erste Konto; das Konto verwaltet (sudo), root bleibt ohne Passwort. Nach dem
+Neustart zeigt die Konsole die Adresse, unter der Akari im Browser läuft.
+
+`iso/test/smoke.sh ISO` installiert es unbeaufsichtigt in QEMU und prüft das
+Ergebnis von außen. Beides läuft im Workflow `iso`; das ISO liegt als
+Artefakt am Lauf.
 
 ## Bauen
 
