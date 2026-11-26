@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Akari OS: GRUB's background on the installed system. Facet's deep ground,
+       the Schein lockup above the menu, Nova falling in from the top right at 22°. -->
+  <defs>
+    <radialGradient id="glow" cx="1" cy="0" r="1">
+      <stop offset="0" stop-color="#5865f2" stop-opacity=".30"/>
+      <stop offset=".5" stop-color="#5865f2" stop-opacity=".07"/>
+      <stop offset="1" stop-color="#5865f2" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5865f2" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#5865f2" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="#050508"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+  <!-- 1080 px tall at 22° → 436 px across -->
+  <path d="M1840 0h80v0L1484 1080h-80z" fill="url(#beam)" opacity=".8"/>
+  <path d="M1730 0h50L1344 1080h-50z" fill="url(#beam)" opacity=".45"/>
+  <path d="M1650 0h30L1244 1080h-30z" fill="url(#beam)" opacity=".25"/>
+  <image xlink:href="lockup-silver.svg" x="760" y="200" width="400" height="80"/>
+</svg>

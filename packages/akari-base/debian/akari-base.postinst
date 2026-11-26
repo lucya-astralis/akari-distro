@@ -5,4 +5,8 @@ set -e
 if [ "$1" = configure ] && [ -d /run/systemd/system ]; then
 	systemctl daemon-reload || true
 fi
+# GRUB with Akari's theme from the next boot on
+if [ "$1" = configure ] && [ -x /usr/sbin/update-grub ] && [ -f /boot/grub/grub.cfg ]; then
+	update-grub 2>/dev/null || true
+fi
 exit 0

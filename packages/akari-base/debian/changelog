@@ -1,3 +1,11 @@
+akari-base (0.11.1) trixie; urgency=medium
+
+  * GRUB on the installed system in Akari's look: a theme with Facet's
+    ground, the Schein lockup and a violet choice (graphics next to a serial
+    console). The name stays Debian, for Secure Boot (EFI/debian).
+
+ -- Akari OS <packages@lucya.systems>  Fri, 27 Nov 2026 10:00:00 +0100
+
 akari-base (0.11.0) trixie; urgency=medium
 
   * First release: os-release, the console's issue, dpkg origin.

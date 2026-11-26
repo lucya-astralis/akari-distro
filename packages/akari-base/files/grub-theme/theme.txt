@@ -1,0 +1,49 @@
+# Akari OS: GRUB on the installed system. Facet's ground, the Schein lockup,
+# the chosen entry on Akari's violet. Fonts are DejaVu Sans, made into GRUB's
+# format when akari-base is built.
+title-text: ""
+desktop-image: "background.png"
+desktop-color: "#050508"
+terminal-font: "DejaVu Sans Mono Regular 16"
+
++ boot_menu {
+  left = 32%
+  top = 38%
+  width = 36%
+  height = 40%
+  item_font = "DejaVu Sans Regular 18"
+  selected_item_font = "DejaVu Sans Bold 18"
+  item_color = "#b8b8c2"
+  selected_item_color = "#ffffff"
+  item_height = 40
+  item_padding = 16
+  item_spacing = 6
+  icon_width = 0
+  icon_height = 0
+  item_icon_space = 0
+  selected_item_pixmap_style = "select_*.png"
+  scrollbar = false
+}
+
++ label {
+  id = "__timeout__"
+  left = 0
+  width = 100%
+  top = 84%
+  height = 24
+  align = "center"
+  color = "#8b8b94"
+  font = "DejaVu Sans Regular 14"
+  text = "Startet in %d s"
+}
+
++ label {
+  left = 0
+  width = 100%
+  top = 90%
+  height = 24
+  align = "center"
+  color = "#5a5a64"
+  font = "DejaVu Sans Regular 14"
+  text = "Enter starten   ·   e bearbeiten   ·   c Befehlszeile"
+}

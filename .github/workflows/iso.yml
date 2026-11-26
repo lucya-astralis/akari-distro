@@ -2,16 +2,20 @@
 # preseed (iso/build-iso.sh), then installed unattended in QEMU and checked
 # from outside (iso/test/smoke.sh). The ISO is kept as an artifact of the run.
 name: iso
+# After every build of the archive (so the ISO installs what was just published),
+# weekly, and by hand.
 on:
-  push:
+  workflow_run:
+    workflows: [apt]
+    types: [completed]
     branches: [main]
-    paths: ["iso/**", "keys/**", "packages/akari-base/**", ".github/workflows/iso.yml"]
   workflow_dispatch:
   schedule:
     - cron: "41 4 * * 1"    # weekly: Debian's point releases, Akari's stable
 
 jobs:
   iso:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
@@ -35,12 +39,15 @@ jobs:
         run: iso/build-iso.sh out
       - name: Bilder (Bootmenü BIOS/UEFI, Installer)
         run: iso/test/screens.sh out/akari-os-*.iso screens
-      - uses: actions/upload-artifact@v4
+      - name: Rauchtest in QEMU
+        env:
+          SCREENS: screens
+        run: iso/test/smoke.sh out/akari-os-*.iso work
+      - if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: screens
           path: screens/*.png
-      - name: Rauchtest in QEMU
-        run: iso/test/smoke.sh out/akari-os-*.iso work
       - uses: actions/upload-artifact@v4
         with:
           name: akari-os-iso

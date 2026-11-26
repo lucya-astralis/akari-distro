@@ -2,7 +2,7 @@ Source: akari-base
 Section: admin
 Priority: important
 Maintainer: Akari OS <packages@lucya.systems>
-Build-Depends: debhelper-compat (= 13)
+Build-Depends: debhelper-compat (= 13), librsvg2-bin, grub-common, fonts-dejavu-core
 Standards-Version: 4.7.2
 Homepage: https://lucya.systems
 Rules-Requires-Root: no
@@ -15,7 +15,8 @@ Recommends: akari-archive-keyring
 Description: Akari OS system identity
  Makes a Debian system an Akari OS: /usr/lib/os-release says ID=akari,
  ID_LIKE=debian (so programs know it is Debian underneath), the console
- greets with Akari OS, and dpkg knows the origin Akari.
+ greets with Akari OS, GRUB wears Akari's theme, and dpkg knows the origin
+ Akari.
  .
  Debian's os-release stays on the system, moved aside (dpkg-divert) and
  back in place when this package goes. Debian's /etc/issue is not touched:

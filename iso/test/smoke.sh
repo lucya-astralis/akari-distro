@@ -54,9 +54,20 @@ say "installiert in $(( ($(date +%s) - start) / 60 )) Minuten"
 
 say "Von der Platte starten"
 # shellcheck disable=SC2086
-qemu-system-x86_64 $ACCEL -m 3072 -smp 2 -display none -drive file="$W/disk.qcow2",if=virtio \
-  -nic user,model=virtio-net-pci,hostfwd=tcp:127.0.0.1:18443-:443 -serial file:"$W/boot.log" &
+qemu-system-x86_64 $ACCEL -m 3072 -smp 2 -display none -vga std -drive file="$W/disk.qcow2",if=virtio \
+  -nic user,model=virtio-net-pci,hostfwd=tcp:127.0.0.1:18443-:443 -serial file:"$W/boot.log" \
+  -monitor unix:"$W/mon",server,nowait &
 VM=$!
+# a picture of GRUB on the installed system (it waits 5 s)
+if [[ -n "${SCREENS:-}" ]]; then
+  mkdir -p "$SCREENS"; sleep 3
+  python3 - "$W/mon" "screendump $W/grub.ppm" <<'PY' || true
+import socket, sys, time
+s = socket.socket(socket.AF_UNIX); s.connect(sys.argv[1]); time.sleep(.3); s.recv(4096)
+s.sendall((sys.argv[2] + "\n").encode()); time.sleep(.8)
+PY
+  sleep 1; convert "$W/grub.ppm" "$SCREENS/installed-grub.png" 2>/dev/null || true
+fi
 U=https://127.0.0.1:18443
 for i in $(seq 1 120); do
   curl -sfk --max-time 5 "$U/api/login/state" -o "$W/state.json" && break

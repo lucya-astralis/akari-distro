@@ -11,4 +11,8 @@ fi
 if [ -d /run/systemd/system ]; then
 	systemctl daemon-reload || true
 fi
+# GRUB as Debian left it
+if { [ "$1" = remove ] || [ "$1" = purge ]; } && [ -x /usr/sbin/update-grub ] && [ -f /boot/grub/grub.cfg ]; then
+	update-grub 2>/dev/null || true
+fi
 exit 0

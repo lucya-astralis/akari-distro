@@ -26,7 +26,7 @@ jobs:
         run: |
           apt-get update -qq
           apt-get install -y -qq --no-install-recommends git ca-certificates curl build-essential debhelper \
-            dpkg-dev fakeroot librsvg2-bin x11-apps gnupg reprepro lintian >/dev/null
+            dpkg-dev fakeroot librsvg2-bin x11-apps gnupg reprepro lintian grub-common fonts-dejavu-core >/dev/null
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
