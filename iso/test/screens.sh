@@ -29,7 +29,7 @@ run() {  # run NAME FIRMWARE-ARGS…: boot the ISO, photograph the menu, then th
 }
 
 echo "BIOS"; run bios
-OVMF=$(ls /usr/share/OVMF/OVMF_CODE_4M.fd /usr/share/OVMF/OVMF_CODE.fd 2>/dev/null | head -1)
+OVMF=$(ls /usr/share/OVMF/OVMF_CODE_4M.fd /usr/share/OVMF/OVMF_CODE.fd 2>/dev/null | head -1 || true)
 if [[ -n "$OVMF" ]]; then
   cp "$(dirname "$OVMF")/OVMF_VARS_4M.fd" "$W/vars.fd" 2>/dev/null || cp "$(dirname "$OVMF")/OVMF_VARS.fd" "$W/vars.fd"
   echo "UEFI"; run uefi -machine q35 -drive if=pflash,format=raw,readonly=on,file="$OVMF" -drive if=pflash,format=raw,file="$W/vars.fd"
