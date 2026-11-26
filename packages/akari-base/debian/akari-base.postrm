@@ -7,4 +7,8 @@ if [ "$1" = remove ] || [ "$1" = abort-install ] || [ "$1" = disappear ]; then
 		dpkg-divert --package akari-base --rename --remove "$f" >/dev/null
 	done
 fi
+# the getty drop-ins are gone: Debian's agetty again
+if [ -d /run/systemd/system ]; then
+	systemctl daemon-reload || true
+fi
 exit 0

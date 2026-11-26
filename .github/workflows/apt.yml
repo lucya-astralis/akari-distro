@@ -1,0 +1,55 @@
+# The Akari OS package archive on GitHub Pages: built from scratch on every
+# change here, every night (akari's main into testing), and by hand.
+name: apt
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: apt
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    container: debian:trixie
+    steps:
+      - name: Werkzeuge
+        run: |
+          apt-get update -qq
+          apt-get install -y -qq --no-install-recommends git ca-certificates curl build-essential debhelper \
+            dpkg-dev fakeroot librsvg2-bin x11-apps gnupg reprepro lintian >/dev/null
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: lucya-astralis/akari
+          path: akari
+          fetch-depth: 0
+      - name: Pakete und Paketquelle
+        env:
+          APT_SIGNING_KEY: ${{ secrets.APT_SIGNING_KEY }}
+          APT_URL: ${{ vars.APT_URL || 'https://lucya-astralis.github.io/akari-distro' }}
+        run: |
+          git config --global --add safe.directory '*'
+          tools/ci-archive.sh akari public
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - id: pages
+        uses: actions/deploy-pages@v4

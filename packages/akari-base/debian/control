@@ -1,7 +1,7 @@
 Source: akari-base
 Section: admin
 Priority: important
-Maintainer: lucya <root@lucya.sh>
+Maintainer: Akari OS <packages@lucya.systems>
 Build-Depends: debhelper-compat (= 13)
 Standards-Version: 4.7.2
 Homepage: https://lucya.systems

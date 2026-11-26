@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+#DEBHELPER#
+# the getty drop-ins (Akari's issue at the console) count from the next prompt on
+if [ "$1" = configure ] && [ -d /run/systemd/system ]; then
+	systemctl daemon-reload || true
+fi
+exit 0

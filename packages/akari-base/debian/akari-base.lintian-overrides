@@ -1,2 +1,5 @@
 # this is what an identity package is for: Debian's files move aside (preinst)
 akari-base: diversion-for-unknown-file *
+# drop-ins for getty@ and serial-getty@ are no units of their own: debhelper does not reload for them
+akari-base: maintainer-script-calls-systemctl [postinst:*]
+akari-base: maintainer-script-calls-systemctl [postrm:*]

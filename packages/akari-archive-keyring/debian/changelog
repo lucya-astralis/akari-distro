@@ -1,5 +1,12 @@
+akari-archive-keyring (2026.11.26.1) trixie; urgency=medium
+
+  * The archive's real key, A38DAB2E86C2099967A0DD57C3054B2F114DBD27
+    (Akari OS Archive Signing Key <packages@lucya.systems>, until 2029-11-25).
+
+ -- Akari OS <packages@lucya.systems>  Thu, 26 Nov 2026 14:00:00 +0100
+
 akari-archive-keyring (2026.11.26) trixie; urgency=medium
 
   * First release.
 
- -- lucya <root@lucya.sh>  Thu, 26 Nov 2026 09:00:00 +0100
+ -- Akari OS <packages@lucya.systems>  Thu, 26 Nov 2026 09:00:00 +0100
