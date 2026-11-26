@@ -1,23 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="75" viewBox="0 0 800 75">
   <!-- Akari OS: the banner of the graphical installer (logo_installer.png, 800×75).
-       Facet's deep ground, the Schein lockup, and Nova: light falling in from the
-       right edge at 22°, as three facets that get fainter. -->
+       The installer centres it on a black strip as wide as the screen, so it is
+       black at both edges and the light stays inside: the Schein lockup, and Nova
+       falling in at 22° as three facets that fade out before the edge. -->
   <defs>
     <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#5865f2" stop-opacity="0"/>
-      <stop offset="1" stop-color="#5865f2" stop-opacity=".55"/>
+      <stop offset=".5" stop-color="#5865f2" stop-opacity=".6"/>
+      <stop offset="1" stop-color="#5865f2" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="glow" cx="1" cy="0" r="1">
-      <stop offset="0" stop-color="#5865f2" stop-opacity=".28"/>
+    <radialGradient id="glow" cx=".5" cy="0" r=".5">
+      <stop offset="0" stop-color="#5865f2" stop-opacity=".26"/>
       <stop offset="1" stop-color="#5865f2" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5865f2" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#5865f2" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#5865f2" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-  <rect width="800" height="75" fill="#050508"/>
-  <rect x="420" width="380" height="75" fill="url(#glow)"/>
+  <rect width="800" height="75" fill="#000"/>
+  <rect x="420" width="360" height="75" fill="url(#glow)"/>
   <!-- facets: 22° against the vertical, 75 px tall → 30.3 px across -->
-  <path d="M758 0h42v0L769.7 75h-42z" fill="url(#fade)" opacity=".9"/>
-  <path d="M700 0h34L703.7 75h-34z" fill="url(#fade)" opacity=".55"/>
-  <path d="M655 0h22L646.7 75h-22z" fill="url(#fade)" opacity=".3"/>
+  <path d="M688 0h40L697.7 75h-40z" fill="url(#fade)"/>
+  <path d="M630 0h30L629.7 75h-30z" fill="url(#fade)" opacity=".6"/>
+  <path d="M584 0h18L571.7 75h-18z" fill="url(#fade)" opacity=".35"/>
   <image xlink:href="lockup-silver.svg" x="30" y="19" width="184" height="37"/>
-  <rect y="74" width="800" height="1" fill="#5865f2" opacity=".45"/>
+  <rect y="74" width="800" height="1" fill="url(#line)"/>
 </svg>

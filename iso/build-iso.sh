@@ -49,7 +49,7 @@ say "Akari-Look: Banner, Boot-Hintergrund, Farben"
 A="$W/art"; mkdir -p "$A"; cp "$HERE"/art/*.svg "$A/"
 rsvg-convert "$A/banner.svg" -o "$A/banner-a.png" && convert "$A/banner-a.png" -alpha off "$A/banner.png"
 rsvg-convert "$A/splash.svg" -o "$A/splash-a.png" && convert "$A/splash-a.png" -alpha off "$X/isolinux/splash.png"
-convert -size 8x8 xc:'#5865f2' "$X/boot/grub/theme/hl_c.png"      # GRUB's highlight behind the chosen entry
+convert -size 8x8 xc:'#5865f2' -define png:color-type=2 "PNG24:$X/boot/grub/theme/hl_c.png"   # GRUB's highlight; GRUB reads no palette PNGs
 # the installer's banner: a second cpio archive after Debian's initrd; the kernel
 # unpacks both, and its files replace Debian's logo (light and dark theme)
 G="$W/initrd-add"; mkdir -p "$G/usr/share/graphics"
@@ -84,6 +84,7 @@ grep -q "Akari OS installieren" "$X/boot/grub/grub.cfg" || { echo "grub.cfg: kei
 # the theme: no Debian title over the lockup, Akari's label, white on violet when chosen
 sed -e 's|^title-text: .*|title-text: ""|' \
     -e 's|Debian GNU/Linux UEFI Installer menu|Akari OS · Installation (UEFI)|' \
+    -e '0,/^  top = 80$/s//  top = 150/' -e '0,/^  left = 45%$/s//  left = 37%/' \
     -e 's|selected_item_color = "black"|selected_item_color = "white"|' "$E/theme-1" > "$X/boot/grub/theme/1"
 grep -q "Akari OS · Installation (UEFI)" "$X/boot/grub/theme/1" || { echo "theme/1: Titel nicht gefunden" >&2; exit 1; }
 
