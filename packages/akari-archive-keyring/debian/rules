@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+# The public key comes from ../../keys/akari-archive.asc, or from AKARI_ARCHIVE_KEY
+# (a development key, for a test archive). Only ever the public key.
+KEY ?= $(or $(AKARI_ARCHIVE_KEY),$(CURDIR)/../../keys/akari-archive.asc)
+%:
+	dh $@
+
+override_dh_auto_build:
+	test -s "$(KEY)" || { echo "kein Schlüssel: $(KEY)"; exit 1; }
+	! grep -q 'PRIVATE KEY' "$(KEY)"
+	gpg --dearmor < "$(KEY)" > debian/akari-archive-keyring.gpg
+
+override_dh_auto_install:
+	install -D -m 644 debian/akari-archive-keyring.gpg debian/akari-archive-keyring/usr/share/keyrings/akari-archive-keyring.gpg
+
+override_dh_clean:
+	dh_clean debian/akari-archive-keyring.gpg

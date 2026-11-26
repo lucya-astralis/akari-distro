@@ -1,0 +1,17 @@
+Source: akari-archive-keyring
+Section: misc
+Priority: important
+Maintainer: lucya <root@lucya.sh>
+Build-Depends: debhelper-compat (= 13), gnupg
+Standards-Version: 4.7.2
+Homepage: https://lucya.systems
+Rules-Requires-Root: no
+
+Package: akari-archive-keyring
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Description: OpenPGP key of the Akari OS package archive
+ The key apt checks Akari OS's packages with. Sources name it with
+ Signed-By: /usr/share/keyrings/akari-archive-keyring.gpg, so it vouches for
+ Akari's archive only, never for Debian's.

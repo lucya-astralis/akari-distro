@@ -1,0 +1,9 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: akari-distro
+Source: https://github.com/lucya-astralis/akari-distro
+
+Files: *
+Copyright: 2026 lucya.systems
+License: AGPL-3.0-or-later
+ See /usr/share/doc/akari/LICENSE (package akari) or
+ https://www.gnu.org/licenses/agpl-3.0.html

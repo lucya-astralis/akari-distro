@@ -1,0 +1,5 @@
+akari-base (0.11.0) trixie; urgency=medium
+
+  * First release: os-release, the console's issue, dpkg origin.
+
+ -- lucya <root@lucya.sh>  Thu, 26 Nov 2026 09:00:00 +0100

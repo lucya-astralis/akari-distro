@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+B := debian/akari-base
+%:
+	dh $@
+
+override_dh_auto_install:
+	install -D -m 644 files/os-release $(B)/usr/lib/os-release
+	install -D -m 644 files/issue $(B)/usr/lib/akari-base/issue
+	install -D -m 644 files/getty-akari.conf $(B)/usr/lib/systemd/system/getty@.service.d/akari.conf
+	install -D -m 644 files/serial-getty-akari.conf $(B)/usr/lib/systemd/system/serial-getty@.service.d/akari.conf
+	install -D -m 644 files/origin $(B)/etc/dpkg/origins/akari
+	install -D -m 644 files/grub.cfg $(B)/etc/default/grub.d/akari.cfg

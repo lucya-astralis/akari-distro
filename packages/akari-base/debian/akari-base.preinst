@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+# Debian's os-release goes aside, ours takes its place (not a conffile, so a
+# diversion is safe; /etc/issue is one and stays Debian's, see getty@.service.d)
+if [ "$1" = install ] || [ "$1" = upgrade ]; then
+	for f in /usr/lib/os-release; do
+		dpkg-divert --package akari-base --rename --divert "$f.debian" --add "$f" >/dev/null
+	done
+fi
+#DEBHELPER#
+exit 0

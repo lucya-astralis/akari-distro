@@ -1,0 +1,22 @@
+Source: akari-base
+Section: admin
+Priority: important
+Maintainer: lucya <root@lucya.sh>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.2
+Homepage: https://lucya.systems
+Rules-Requires-Root: no
+
+Package: akari-base
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, base-files (>= 13)
+Recommends: akari-archive-keyring
+Description: Akari OS system identity
+ Makes a Debian system an Akari OS: /usr/lib/os-release says ID=akari,
+ ID_LIKE=debian (so programs know it is Debian underneath), the console
+ greets with Akari OS, and dpkg knows the origin Akari.
+ .
+ Debian's os-release stays on the system, moved aside (dpkg-divert) and
+ back in place when this package goes. Debian's /etc/issue is not touched:
+ the console's agetty reads Akari's issue instead.
