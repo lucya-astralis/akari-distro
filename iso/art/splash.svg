@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="640" height="480" viewBox="0 0 640 480">
+  <!-- Akari OS: the boot menu's background, BIOS (isolinux) and UEFI (GRUB).
+       The menu is drawn over the middle; the lockup stays above it. -->
+  <defs>
+    <radialGradient id="glow" cx="1" cy="0" r="1.1">
+      <stop offset="0" stop-color="#5865f2" stop-opacity=".30"/>
+      <stop offset=".55" stop-color="#5865f2" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#5865f2" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5865f2" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#5865f2" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="#050508"/>
+  <rect width="640" height="480" fill="url(#glow)"/>
+  <!-- Nova from the top right edge, 22° against the vertical: 480 px tall → 194 px across -->
+  <path d="M610 0h30v0L446 480h-30z" fill="url(#beam)" opacity=".8"/>
+  <path d="M568 0h20L394 480h-20z" fill="url(#beam)" opacity=".45"/>
+  <path d="M536 0h12L354 480h-12z" fill="url(#beam)" opacity=".25"/>
+  <image xlink:href="lockup-silver.svg" x="221" y="34" width="199" height="40"/>
+  <rect x="40" y="452" width="560" height="1" fill="#ffffff" opacity=".06"/>
+</svg>
