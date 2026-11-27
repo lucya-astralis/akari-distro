@@ -5,7 +5,10 @@
 #   stable    akari from its newest release tag (v*), if it has one
 #   testing   akari from its main branch, as <version>+git<date>.<commit>
 #
-# akari-base and akari-archive-keyring come from this repo in both. Signed with
+# akari-base and akari-archive-keyring come from this repo in both, and from
+# Debian's trixie-backports what Akari needs newer than trixie has: kmscon (the
+# console with real fonts, for the shell's Nerd Font) and libtsm4 under it, as
+# Debian signed them, so installs need no backports source. Signed with
 # the key in $APT_SIGNING_KEY (armored secret key); the result goes to public/.
 #
 #   tools/ci-archive.sh AKARI-CHECKOUT OUT
@@ -40,6 +43,17 @@ say "akari-base, akari-archive-keyring"
 AKARI_ARCHIVE_KEY="$ROOT/keys/akari-archive.asc" "$ROOT/tools/build.sh" "$W/distro"
 if grep -E "^E:" "$W/distro/lintian.txt"; then echo "lintian: Fehler (oben)" >&2; exit 1; fi
 
+say "aus trixie-backports: kmscon, libtsm4"
+BACKPORTS=(kmscon libtsm4)
+printf 'Types: deb\nURIs: http://deb.debian.org/debian\nSuites: trixie-backports\nComponents: main\nSigned-By: /usr/share/keyrings/debian-archive-keyring.gpg\n' \
+  > /etc/apt/sources.list.d/backports.sources
+apt-get update -qq
+mkdir -p "$W/backports"
+for arch in amd64; do
+  (cd "$W/backports" && apt-get download -qq "${BACKPORTS[@]/%/:$arch/trixie-backports}")
+done
+ls "$W/backports" | sed "s/^/  /"
+
 say "akari testing (main)"
 build_akari "$(git -C "$AKARI" rev-parse origin/main 2>/dev/null || git -C "$AKARI" rev-parse HEAD)" testing
 TAG=$(git -C "$AKARI" tag -l 'v*' --sort=-v:refname | head -1)
@@ -52,7 +66,7 @@ fi
 
 say "Paketquelle"
 for suite in stable testing; do
-  debs=("$W"/distro/*.deb)
+  debs=("$W"/distro/*.deb "$W"/backports/*.deb)
   [[ -d "$W/$suite" ]] && debs+=("$W/$suite"/*.deb)
   "$ROOT/tools/archive.sh" "$W/apt" "$FPR" "$suite" "${debs[@]}" >/dev/null
   reprepro -b "$W/apt" list "$suite" | sed "s/^/  /"
