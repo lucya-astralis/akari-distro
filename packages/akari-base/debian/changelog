@@ -1,3 +1,11 @@
+akari-base (0.11.2) trixie; urgency=medium
+
+  * GRUB's menu says "Akari OS GNU/Linux". grub-install still reads
+    "Debian", so the EFI folder stays EFI/debian for Secure Boot: the name
+    changes only where grub-mkconfig reads the setting.
+
+ -- Akari OS <packages@lucya.systems>  Fri, 27 Nov 2026 20:00:00 +0100
+
 akari-base (0.11.1) trixie; urgency=medium
 
   * GRUB on the installed system in Akari's look: a theme with Facet's
