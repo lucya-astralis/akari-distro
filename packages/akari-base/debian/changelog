@@ -1,3 +1,11 @@
+akari-base (0.11.3) trixie; urgency=medium
+
+  * os-release names Akari OS without a number of its own. 0.11 was this
+    package's version, not Akari's, and showed beside it in the settings and
+    in fastfetch. Akari's version is akari's (akari --version).
+
+ -- Akari OS <packages@lucya.systems>  Sun, 29 Nov 2026 20:00:00 +0100
+
 akari-base (0.11.2) trixie; urgency=medium
 
   * GRUB's menu says "Akari OS GNU/Linux". grub-install still reads
