@@ -83,7 +83,7 @@ j() { python3 -c "import json,sys; d=json.load(open('$W/state.json')); print($1)
 check "das System heißt Akari OS"                      '[[ "$(j "d[\"os\"]")" == "Akari OS"* ]]'
 check "es ist eingerichtet (das Konto kam vom Installer)" '[[ "$(j "d[\"setup\"]")" == False ]]'
 check "die Anmeldeseite zeigt akari-test"              '[[ "$(j "[a[\"name\"] for a in d[\"accounts\"]]")" == *akari-test* ]]'
-check "die Konsole zeigt die Adresse"                  'grep -a -q "Im Browser" "$W/boot.log"'
+check "die Konsole zeigt die Adresse"                  'grep -a -q -E "(In a browser|Im Browser):" "$W/boot.log"'
 C="$W/cookies"
 code=$(curl -sk -o /dev/null -w '%{http_code}' -c "$C" -H "Origin: $U" -H 'Content-Type: application/json' \
   --data "{\"name\":\"akari-test\",\"password\":\"$PW\"}" "$U/api/login")
